@@ -1,0 +1,42 @@
+.App {
+  text-align: center;
+  .search-bar{
+    width: 241px;
+    height: 38px; 
+    font-size: 16px;
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(206, 212, 218);
+    padding-top: 6px;
+    padding-left: 12px; 
+    padding-right: 10px;
+    border-radius: 4px;
+    margin-bottom:4px;
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: left;
+  }
+
+  #table-null-state {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: center;
+  }
+  .spinner{
+    margin:100px
+  }
+  .table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+  .focus-bar{
+    border-color: rgb(206, 212, 218);
+  }
+  
+}
