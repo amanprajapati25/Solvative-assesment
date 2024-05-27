@@ -3,16 +3,18 @@ import axios from 'axios';
 import './App.css';
 import Pagination, { ITEMS_PER_PAGE } from './Pagination';
 import { debounce } from './debounce';
-import spinner from './spinner.gif'
+import spinner from './spinner.gif';
+import { apiRequest } from './Api';
+
 const Table = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const searchInputRef = useRef(null);
 
-  const fetchData = async (query, page = 1) => {
+  const fetchData = async (query, page) => {
     if (!query.trim()) {
       setData([]);
       setTotalResults(0);
@@ -20,31 +22,19 @@ const Table = () => {
     }
   
     setLoading(true);
-  
-    const options = {
-      method: 'GET',
-      url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
-      params: { countryIds: 'IN', namePrefix: query, limit: ITEMS_PER_PAGE, offset: (page - 1) * ITEMS_PER_PAGE },
-      headers: {
-        'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
-        'x-rapidapi-key': '44b9336c26msh2d2b72ba82f818bp113b5bjsnec09062e8a81',
-      },
-    };
-  
-    try {
-      const response = await axios.request(options);
-      setData(response.data.data);
-      setTotalResults(response.data.metadata.totalCount);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+
+    apiRequest(query, page)
+      .then(response => {
+        setData(response.data.data);
+        setTotalResults(response.data.metadata.totalCount);
+      })
+      .catch(error => {
+        console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
-
-
-  
-  
 
   const debouncedFetchData = useCallback(debounce(fetchData, 500), []);
 
@@ -76,7 +66,7 @@ const Table = () => {
   return (
     <div>
       <form onSubmit={handleSearch}>
-        <div className='input-bor'>
+        <div className='search-container'>
           <input
             ref={searchInputRef}
             className='search-bar'
@@ -85,6 +75,9 @@ const Table = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          <span className="shortcut">
+            Ctrl + /
+          </span>
         </div>
         
 
@@ -138,7 +131,6 @@ const Table = () => {
       )}
     </div>
   );
-  
 };
 
 export default Table;

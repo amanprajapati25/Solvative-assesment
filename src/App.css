@@ -1,22 +1,31 @@
 .App {
   text-align: center;
+  color: rgb(33, 37, 41);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"  ;
   .search-bar{
     width: 241px;
     height: 38px; 
     font-size: 16px;
-    background-color: rgb(255, 255, 255);
-    border-color: rgb(206, 212, 218);
+    border: none;
     padding-top: 6px;
+    padding-bottom: 6px;
     padding-left: 12px; 
     padding-right: 10px;
+    outline: none;
+  }
+  .search-container{
+    width: 350px;
+    border: 1px solid rgb(206, 212, 218);
     border-radius: 4px;
-    margin-bottom:4px;
+    margin-bottom: 14px;
   }
   .table {
     width: 100%;
     border-collapse: collapse;
   }
-  
+  .shortcut{
+    color: rgb(114 116 117);
+  }
   .table th, .table td {
     border: 1px solid #dee2e6;
     padding: 8px;
@@ -35,8 +44,21 @@
     background-color: #f8f9fa;
     font-weight: bold;
   }
-  .focus-bar{
-    border-color: rgb(206, 212, 218);
+  .pagination-res{
+    display: flex;
+    flex-direction: column;
+  }
+  .pagination-controls{
+    display: flex;
+    justify-content: space-between;
+  }
+  .pagination-button{
+    height: 24px;
+    width: 30px;
+  }
+  .btn-page{
+    height:30px;
+    width:120px
   }
   
 }

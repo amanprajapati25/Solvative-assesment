@@ -1,8 +1,6 @@
 import React from 'react';
-// import { Swal, Toast } from 'Toast';
-// import NumberInput from "components/NumberInput";
 
-export const ITEMS_PER_PAGE = 5;
+export const ITEMS_PER_PAGE = 3;
 
 export default function Pagination({
   total,
@@ -16,13 +14,7 @@ export default function Pagination({
   const [input, setInput] = React.useState("");
 
   function showError(msg) {
-    // Toast.fire({
-    //   icon: 'error',
-    //   title: "Error",
-    //   html: `<h5 class="">${msg}</h5>`,
-    //   timer: 3000,
-    // });
-    alert(msg)
+    console.log(msg)
   }
 
   function handleSearch() {
@@ -48,39 +40,36 @@ export default function Pagination({
         <p>Total Result{total > 1 ? 's' : ''}: {total}</p>
       </div>
       <div className="pagination-controls">
-        <button
-          className="pagination-button"
-          onClick={() => setPage(page - 1)}
-          disabled={page <= 1}
-          title={"Previous Page"}
-        >
-          &#60;
-        </button>
-        <button
-          className="pagination-button"
-          onClick={() => setPage(page + 1)}
-          disabled={disableNext}
-          title={"Next Page"}
-        >
-          &#62;
-        </button>
-        <p>Page {page} of {numberOfPages}</p>
+        <div className='pagination-res'>
+          <div>
+            <button
+            className="pagination-button"
+            onClick={() => setPage(page - 1)}
+            disabled={page <= 1}
+            title={"Previous Page"}
+            >
+              &#60;
+            </button>
+
+            <button
+            className="pagination-button"
+            onClick={() => setPage(page + 1)}
+            disabled={disableNext}
+            title={"Next Page"}
+          >
+            &#62;
+          </button>
+          </div>
+          <p>Page {page} of {numberOfPages}</p>
+
+        </div>
+        
+        
         {numberOfPages > 2 && !hideGotoPage && (
-          <div className="goto-page">
-            {/* <NumberInput
-              type="number"
-              className="page-input"
-              placeholder="Page No."
-              aria-describedby="button-addon2"
-              min={1}
-              max={numberOfPages}
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-            /> */}
+          <div>
             <input 
                 type="number"
-                className="page-input"
+                className="btn-page"
                 placeholder="Page No."
                 min={1}
                 max={numberOfPages}
@@ -89,7 +78,7 @@ export default function Pagination({
                 onKeyPress={handleKeyPress}
             />
             <button
-              className="goto-button"
+              className="btn-page"
               type="button"
               onClick={handleSearch}
             >
