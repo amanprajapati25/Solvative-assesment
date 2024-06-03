@@ -8,9 +8,11 @@ export default function Pagination({
   setPage,
   disableNext,
   totalPage,
+  setResPerPage,
+  resPerPage,
   hideGotoPage = false
 }) {
-  const numberOfPages = totalPage || Math.ceil(total / ITEMS_PER_PAGE);
+  const numberOfPages = totalPage || Math.ceil(total / resPerPage);
   const [input, setInput] = React.useState("");
 
   function showError(msg) {
@@ -64,7 +66,16 @@ export default function Pagination({
 
         </div>
         
-        
+          <input 
+              type="number"
+              className="btn-page"
+              placeholder="Number of Results"
+              min={1}
+              max={10}
+              value={resPerPage}
+              onChange={e => setResPerPage(e.target.value)}
+              onKeyDown={handleKeyPress}
+            />
         {numberOfPages > 2 && !hideGotoPage && (
           <div>
             <input 
@@ -75,7 +86,7 @@ export default function Pagination({
                 max={numberOfPages}
                 value={input}
                 onChange={e => setInput(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
             />
             <button
               className="btn-page"

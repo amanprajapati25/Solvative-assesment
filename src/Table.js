@@ -12,9 +12,10 @@ const Table = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+  const [resPerPage, setResPerPage] = useState(3);
   const searchInputRef = useRef(null);
 
-  const fetchData = async (query, page) => {
+  const fetchData = async (query, page,resPerPage) => {
     if (!query.trim()) {
       setData([]);
       setTotalResults(0);
@@ -23,7 +24,7 @@ const Table = () => {
   
     setLoading(true);
 
-    apiRequest(query, page)
+    apiRequest(query, page, resPerPage)
       .then(response => {
         setData(response.data.data);
         setTotalResults(response.data.metadata.totalCount);
@@ -40,8 +41,8 @@ const Table = () => {
 
   
   useEffect(() => {
-    debouncedFetchData(searchTerm, currentPage);
-  }, [searchTerm, currentPage, debouncedFetchData]);
+    debouncedFetchData(searchTerm, currentPage,resPerPage);
+  }, [searchTerm, currentPage, debouncedFetchData, resPerPage]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -108,7 +109,7 @@ const Table = () => {
                     <td>{row.city}</td>
                     <td>
                       <img
-                        src={`https://countryflags.com/png/IN`}
+                        src={`https://countryflagsapi.com/png/${row.countryCode}`}
                         alt={row.country}
                         style={{ width: '20px', marginRight: '10px' }}
                       />
@@ -124,6 +125,8 @@ const Table = () => {
               total={totalResults}
               page={currentPage}
               setPage={setCurrentPage}
+              resPerPage={resPerPage}
+              setResPerPage={setResPerPage}
               disableNext={currentPage >= Math.ceil(totalResults / ITEMS_PER_PAGE)}
             />
           )}
